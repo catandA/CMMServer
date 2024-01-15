@@ -20,6 +20,10 @@ public class ChatSender {
 		SessionHandler.broadcastMessage(ChatMsgUtils.sendChatJson(sender, message));
 	}
 
+	public static void sendPlayerList(WebSocketSession session) throws IOException {
+		session.sendMessage(new TextMessage(ChatMsgUtils.sendPlayerListJson()));
+	}
+
 	public static void sendError(WebSocketSession session, String message) throws IOException {
 		session.sendMessage(new TextMessage(ChatMsgUtils.sendErrorJson(message)));
 	}

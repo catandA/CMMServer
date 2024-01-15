@@ -3,7 +3,6 @@ package me.catand.cmmserver;
 import com.google.gson.JsonObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
 import java.io.IOException;
@@ -33,7 +32,7 @@ public enum MessageType {
 					throw new RuntimeException(e);
 				}
 				logger.info(session.getId() + " 验证成功, " + name + " (" + version + clientType + ", " + (invisible ? "隐身" : "可见") + ")");
-				User info = new User(uuid, name, version, clientType, invisible);
+				User info = new User(uuid, name, version, clientType, invisible, false, false, false);
 				SessionHandler.addSession(session, info);
 			}
 		}
@@ -89,14 +88,19 @@ public enum MessageType {
 	PLAYER_LIST {
 		@Override
 		public void handleMessage(WebSocketSession session, JsonObject msgJson) {
-
+			try {
+				logger.info("给" + session.getId() + "发送在线列表...");
+				ChatSender.sendPlayerList(session);
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
 		}
 	},
 	//错误
 	ERROR {
 		@Override
 		public void handleMessage(WebSocketSession session, JsonObject msgJson) {
-
+			logger.error(session.getId() + " 错误: " + msgJson.get("message").getAsString());
 		}
 	},
 	//链接
