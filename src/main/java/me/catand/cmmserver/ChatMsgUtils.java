@@ -11,7 +11,7 @@ public class ChatMsgUtils {
 	}
 
 	public static String sendChatJson(User sender, String message) {
-		return "{\"type\":\"chat\",\"message\":\"\\[norank\\] " + sender.getName() + ": " + message + "\"}";
+		return "{\"type\":\"chat\",\"sender\":\"" + sender.getName() + "\",\"message\":\"" + message + "\"}";
 	}
 
 	public static String sendPlayerListJson() {
