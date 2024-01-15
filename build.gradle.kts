@@ -22,10 +22,12 @@ repositories {
 }
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter")
-    compileOnly("org.projectlombok:lombok")
-    annotationProcessor("org.projectlombok:lombok")
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    implementation("org.springframework.boot:spring-boot-starter:3.1.0")
+    implementation("org.springframework.boot:spring-boot-starter-websocket:3.0.4")
+    implementation("com.google.code.gson:gson:2.8.8")
+    compileOnly("org.projectlombok:lombok:18.26")
+    annotationProcessor("org.projectlombok:lombok:1.18.26")
+    testImplementation("org.springframework.boot:spring-boot-starter-test:3.1.0")
 }
 
 tasks.withType<Test> {
