@@ -7,11 +7,11 @@ public class ChatMsgUtils {
 		return "{\"type\":\"auth\",\"message\":\"" + MOTD + "\"}";
 	}
 
-	public static String sendErrorJson(String message) {
-		return "{\"type\":\"error\",\"message\":\"" + message + "\"}";
-	}
-
 	public static String sendChatJson(User sender, String message) {
 		return "{\"type\":\"chat\",\"message\":\"\\[norank\\] " + sender.getName() + ": " + message + "\"}";
+	}
+
+	public static String sendErrorJson(String message) {
+		return "{\"type\":\"error\",\"message\":\"" + message + "\"}";
 	}
 }

@@ -35,7 +35,7 @@ public class SocketTextHandler extends TextWebSocketHandler {
 		if (type == null) {
 			try {
 				logger.error(session.getId() + " 没有消息类型\n" + msgJson);
-				session.sendMessage(new TextMessage(ChatMsgUtils.sendErrorJson("没有消息类型")));
+				ChatSender.sendError(session, "没有消息类型");
 			} catch (IOException e) {
 				throw new RuntimeException(e);
 			}
@@ -46,7 +46,7 @@ public class SocketTextHandler extends TextWebSocketHandler {
 			} catch (IllegalArgumentException e) {
 				try {
 					logger.error(session.getId() + " 无效的消息类型\n" + msgJson);
-					session.sendMessage(new TextMessage(ChatMsgUtils.sendErrorJson("无效的消息类型")));
+					ChatSender.sendError(session, "无效的消息类型");
 				} catch (IOException ex) {
 					throw new RuntimeException(ex);
 				}

@@ -21,12 +21,13 @@ public enum MessageType {
 			if (uuid == null || uuid.isEmpty() || name == null || name.isEmpty() || version == null || version.isEmpty() || clientType == null || clientType.isEmpty()) {
 				try {
 					logger.error(session.getId() + " 验证失败\n" + msgJson);
-					session.sendMessage(new TextMessage(ChatMsgUtils.sendErrorJson("消息参数错误, 验证失败")));
+					ChatSender.sendError(session, "消息参数错误, 验证失败");
 				} catch (IOException e) {
 					throw new RuntimeException(e);
 				}
 			} else {
 				try {
+					logger.info("正在给" + session.getId() + "(" + name + ")发送认证信息...");
 					ChatSender.sendAuth(session);
 				} catch (IOException e) {
 					throw new RuntimeException(e);
@@ -46,7 +47,7 @@ public enum MessageType {
 			if (sender == null) {
 				try {
 					logger.error(session.getId() + " 未验证, 发送消息失败\n" + msgJson);
-					session.sendMessage(new TextMessage(ChatMsgUtils.sendErrorJson("未成功验证, 发送消息失败")));
+					ChatSender.sendError(session, "未成功验证, 发送消息失败");
 				} catch (IOException e) {
 					throw new RuntimeException(e);
 				}

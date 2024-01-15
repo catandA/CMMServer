@@ -19,4 +19,8 @@ public class ChatSender {
 	public static void sendChat(User sender, String message) {
 		SessionHandler.broadcastMessage(ChatMsgUtils.sendChatJson(sender, message));
 	}
+
+	public static void sendError(WebSocketSession session, String message) throws IOException {
+		session.sendMessage(new TextMessage(ChatMsgUtils.sendErrorJson(message)));
+	}
 }
