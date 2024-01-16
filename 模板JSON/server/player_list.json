@@ -1,5 +1,6 @@
 {
 	"type": "player_list",
+	"amount": 2,
 	"players": [
 		{
 			"name": "catandE"

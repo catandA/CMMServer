@@ -17,23 +17,22 @@ public enum MessageType {
 			String version = msgJson.get("version").getAsString();
 			String clientType = msgJson.get("clientType").getAsString();
 			boolean invisible = msgJson.get("invisible").getAsBoolean();
-			if (uuid == null || uuid.isEmpty() || name == null || name.isEmpty() || version == null || version.isEmpty() || clientType == null || clientType.isEmpty()) {
-				try {
+			try {
+				if (uuid == null || uuid.isEmpty() || name == null || name.isEmpty() || version == null || version.isEmpty() || clientType == null || clientType.isEmpty()) {
 					logger.error(session.getId() + " 验证失败\n" + msgJson);
 					ChatSender.sendError(session, "消息参数错误, 验证失败");
-				} catch (IOException e) {
-					throw new RuntimeException(e);
-				}
-			} else {
-				try {
-					logger.info("正在给" + session.getId() + "(" + name + ")发送认证信息...");
+				} else {
 					ChatSender.sendAuth(session);
-				} catch (IOException e) {
-					throw new RuntimeException(e);
+					logger.info(session.getId() + " 验证成功, " + name + " (" + version + clientType + ", " + (invisible ? "隐身" : "可见") + ")");
+					User info = new User(uuid, name, version, clientType, invisible, false, false, false);
+					SessionHandler.addSession(session, info);
+					if (!invisible) {
+						ChatSender.sendJoin(info);
+					}
+					ChatSender.sendPlayerList(session);
 				}
-				logger.info(session.getId() + " 验证成功, " + name + " (" + version + clientType + ", " + (invisible ? "隐身" : "可见") + ")");
-				User info = new User(uuid, name, version, clientType, invisible, false, false, false);
-				SessionHandler.addSession(session, info);
+			} catch (IOException e) {
+				throw new RuntimeException(e);
 			}
 		}
 	},

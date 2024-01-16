@@ -13,7 +13,6 @@ public class ChatSender {
 
 	public static void sendAuth(WebSocketSession session) throws IOException {
 		session.sendMessage(new TextMessage(ChatMsgUtils.sendAuthJson()));
-		logger.info("正在给" + session.getId() + "发送认证信息...");
 	}
 
 	public static void sendChat(User sender, String message) {
@@ -22,6 +21,14 @@ public class ChatSender {
 
 	public static void sendPlayerList(WebSocketSession session) throws IOException {
 		session.sendMessage(new TextMessage(ChatMsgUtils.sendPlayerListJson()));
+	}
+
+	public static void sendJoin(User player) throws IOException {
+		SessionHandler.broadcastMessage(ChatMsgUtils.sendJoinJson(player));
+	}
+
+	public static void sendLeave(User player) throws IOException {
+		SessionHandler.broadcastMessage(ChatMsgUtils.sendLeaveJson(player));
 	}
 
 	public static void sendError(WebSocketSession session, String message) throws IOException {

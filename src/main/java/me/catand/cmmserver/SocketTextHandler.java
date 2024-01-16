@@ -25,7 +25,18 @@ public class SocketTextHandler extends TextWebSocketHandler {
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 		logger.info(session.getId() + " 已断开连接");
+		boolean sendLeave = true;
+		if (SessionHandler.sessionInfoMap.containsKey(session)) {
+			User info = SessionHandler.sessionInfoMap.get(session);
+			if (!info.isInvisible()) {
+				sendLeave = false;
+			}
+		}
+		User info = SessionHandler.sessionInfoMap.get(session);
 		SessionHandler.removeSession(session);
+		if (sendLeave) {
+			ChatSender.sendLeave(info);
+		}
 	}
 
 	@Override

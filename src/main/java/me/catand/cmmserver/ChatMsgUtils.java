@@ -17,14 +17,26 @@ public class ChatMsgUtils {
 	public static String sendPlayerListJson() {
 		JsonObject result = new JsonObject();
 		result.addProperty("type", "player_list");
+		result.addProperty("amount", SessionHandler.sessionInfoMap.size());
 		JsonArray playersArray = new JsonArray();
 		for (User user : SessionHandler.sessionInfoMap.values()) {
+			if (user.isInvisible()) {
+				continue;
+			}
 			JsonObject playerObject = new JsonObject();
 			playerObject.addProperty("name", user.getName());
 			playersArray.add(playerObject);
 		}
 		result.add("players", playersArray);
 		return result.toString();
+	}
+
+	public static String sendJoinJson(User player) {
+		return "{\"type\":\"join\",\"name\":\"" + player.getName() + "\"}";
+	}
+
+	public static String sendLeaveJson(User player) {
+		return "{\"type\":\"leave\",\"name\":\"" + player.getName() + "\"}";
 	}
 
 	public static String sendErrorJson(String message) {
