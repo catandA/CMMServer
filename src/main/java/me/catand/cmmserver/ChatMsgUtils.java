@@ -39,6 +39,11 @@ public class ChatMsgUtils {
 		return "{\"type\":\"leave\",\"name\":\"" + player.getName() + "\"}";
 	}
 
+	public static String sendShowJson(User player, JsonObject msgJson) {
+		msgJson.addProperty("sender", player.getName());
+		return msgJson.toString();
+	}
+
 	public static String sendErrorJson(String message) {
 		return "{\"type\":\"error\",\"message\":\"" + message + "\"}";
 	}

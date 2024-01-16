@@ -1,5 +1,6 @@
 package me.catand.cmmserver;
 
+import com.google.gson.JsonObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.socket.TextMessage;
@@ -29,6 +30,9 @@ public class ChatSender {
 
 	public static void sendLeave(User player) throws IOException {
 		SessionHandler.broadcastMessage(ChatMsgUtils.sendLeaveJson(player));
+	}
+	public static void sendShow(User player, JsonObject msgJson) throws IOException {
+		SessionHandler.broadcastMessage(ChatMsgUtils.sendShowJson(player, msgJson));
 	}
 
 	public static void sendError(WebSocketSession session, String message) throws IOException {

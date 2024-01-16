@@ -1,5 +1,7 @@
 {
 	"type": "show",
+	"slot": "helmet",//helmet, chestplate, leggings, boots, hand
 	"displayName": "Necron's Handle",
-	"nbt": "Necron's Handle"
+	"nbt": "Necron's Handle",
+	"amount": 1
 }

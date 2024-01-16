@@ -1,6 +1,8 @@
 {
 	"type": "show",
 	"sender": "catandE",
+	"slot": "helmet",
 	"displayName": "Necron's Handle",
-	"nbt": "Necron's Handle"
+	"nbt": "Necron's Handle",
+	"amount": 1
 }

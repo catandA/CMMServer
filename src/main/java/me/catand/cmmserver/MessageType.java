@@ -59,7 +59,18 @@ public enum MessageType {
 	SHOW {
 		@Override
 		public void handleMessage(WebSocketSession session, JsonObject msgJson) {
-
+			User sender = SessionHandler.sessionInfoMap.get(session);
+			try {
+				if (sender == null) {
+					logger.error(session.getId() + " 未验证, 展示物品失败\n" + msgJson);
+					ChatSender.sendError(session, "未成功验证, 展示物品失败");
+				} else {
+					logger.info(sender.getName() + " 展示物品: " + msgJson.get("displayName").getAsString() + "(" + msgJson.get("slot").getAsString() + ")");
+					ChatSender.sendShow(sender, msgJson);
+				}
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
 		}
 	},
 	//广播
